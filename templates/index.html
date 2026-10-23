@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Timetable Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --danger: #ef4444;
+      --danger-bg: #fef2f2;
+      --success: #10b981;
+      --success-bg: #ecfdf5;
+      --break-bg: #f1f5f9;
+      --break-border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      background: var(--bg-card);
+      padding: 20px 28px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+    }
+
+    .header-title h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1e1b4b;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-title p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: #f1f5f9;
+      color: #334155;
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background-color: #e2e8f0;
+    }
+
+    .btn-success {
+      background-color: var(--success);
+      color: white;
+    }
+    .btn-success:hover {
+      background-color: #059669;
+    }
+
+    .btn-sm {
+      padding: 7px 14px;
+      font-size: 0.8rem;
+      border-radius: 8px;
+    }
+
+    .btn-danger-sm {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fca5a5;
+      padding: 7px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn-danger-sm:hover {
+      background: #fecaca;
+    }
+
+    /* Preset Selection Buttons */
+    .preset-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f8fafc;
+      padding: 5px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .preset-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-right: 4px;
+    }
+
+    .btn-preset {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-preset:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+
+    .btn-preset.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary-hover);
+      box-shadow: 0 2px 4px rgba(79, 70, 229, 0.25);
+    }
+
+    /* Top Two-Column Grid: Card 1 and Card 2 beside each other */
+    .top-row-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 960px) {
+      .top-row-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-header h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Forms */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #475569;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.875rem;
+      color: var(--text-main);
+      background-color: #fff;
+      transition: border 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .help-text {
+      font-size: 0.775rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Dynamic Item Rows */
+    .dynamic-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 380px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    /* Teacher List Grid */
+    .teacher-table-header {
+      display: grid;
+      grid-template-columns: 1.5fr 2.5fr 44px;
+      gap: 12px;
+      padding: 10px 14px;
+      background: #f1f5f9;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 8px;
+    }
+
+    .teacher-item-row {
+      display: grid;
+      grid-template-columns: 1.5fr 2.5fr 44px;
+      gap: 12px;
+      align-items: center;
+      background: #ffffff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+
+    /* Subject Table Header & Item Rows (Spacious & Readable) */
+    .subject-table-container {
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .subject-table-header {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 1.8fr 1fr 1.1fr 1.8fr 1.6fr 44px;
+      min-width: 960px;
+      gap: 12px;
+      padding: 12px 14px;
+      background: #f1f5f9;
+      border-radius: 8px;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 10px;
+    }
+
+    .subject-item-row {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 1.8fr 1fr 1.1fr 1.8fr 1.6fr 44px;
+      min-width: 960px;
+      gap: 12px;
+      align-items: center;
+      background: #ffffff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+
+    .subject-item-row:hover,
+    .teacher-item-row:hover {
+      border-color: #cbd5e1;
+      background: #fcfdfe;
+    }
+
+    /* Status Notifications */
+    .notification {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      display: none;
+      font-size: 0.925rem;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .notification.error {
+      display: block;
+      background-color: var(--danger-bg);
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+
+    .notification.success {
+      display: block;
+      background-color: var(--success-bg);
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+    }
+
+    /* Timetable Display */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 10px 22px;
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      position: relative;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      background: white;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    table.timetable {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 0.875rem;
+    }
+
+    table.timetable th,
+    table.timetable td {
+      border: 1px solid var(--border);
+      padding: 14px 12px;
+      vertical-align: middle;
+      min-width: 140px;
+    }
+
+    table.timetable th {
+      background-color: #f8fafc;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    .day-col {
+      font-weight: 700;
+      background-color: #f8fafc;
+      color: #1e293b;
+      min-width: 130px !important;
+    }
+
+    /* Subject Badges inside Cells */
+    .subject-card {
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      border-radius: 8px;
+      padding: 10px 8px;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .subject-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #1e1b4b;
+    }
+
+    .subject-meta {
+      font-size: 0.775rem;
+      color: #4338ca;
+      margin-top: 4px;
+    }
+
+    .break-cell {
+      background-color: var(--break-bg) !important;
+      color: #64748b;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      font-size: 0.8rem;
+    }
+
+    .free-cell {
+      color: #cbd5e1;
+      font-size: 0.85rem;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 70px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg {
+      width: 60px;
+      height: 60px;
+      stroke: #cbd5e1;
+      margin-bottom: 14px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="header-title">
+        <h1>🗓️ Timetable Generator</h1>
+        <p>Constraint-Satisfaction Academic Scheduler with Clash-Free Guarantee</p>
+      </div>
+      <div class="header-actions">
+        <div class="preset-container">
+          <span class="preset-label">Sample Presets:</span>
+          <button class="btn-preset active" id="btnPreset1" onclick="loadSamplePreset(1)" title="Standard academic CSE-A & CSE-B sample">
+            ⚡ 1. Default (CSE-A & B)
+          </button>
+          <button class="btn-preset" id="btnPreset2" onclick="loadSamplePreset(2)" title="NIT Warangal timetable with fixed slots (without Minor)">
+            🏛️ 2. NITW (Fixed, No Minor)
+          </button>
+          <button class="btn-preset" id="btnPreset3" onclick="loadSamplePreset(3)" title="NIT Warangal entered once with Freq/Wk=3 for auto-scheduling">
+            🚀 3. NITW (Auto Freq=3)
+          </button>
+        </div>
+        <button class="btn btn-primary" onclick="generateTimetable()">
+          ✨ Generate Timetable
+        </button>
+      </div>
+    </header>
+
+    <!-- Notification Banner -->
+    <div id="notification" class="notification"></div>
+
+    <!-- ROW 1: Card 1 (General Settings) & Card 2 (Teachers & Availability) Side-by-Side -->
+    <div class="top-row-grid">
+      <!-- 1. General Settings -->
+      <div class="card" style="margin-bottom: 0;">
+        <div class="card-header">
+          <h2>1. General Settings</h2>
+        </div>
+        
+        <div class="form-group">
+          <label>Working Days (comma-separated)</label>
+          <input type="text" id="daysInput" class="form-control" value="Monday, Tuesday, Wednesday, Thursday, Friday">
+          <div class="help-text">e.g. Monday, Tuesday, Wednesday, Thursday, Friday</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Periods Per Day</label>
+            <input type="number" id="periodsInput" class="form-control" value="6" min="1" max="12">
+          </div>
+          <div class="form-group">
+            <label>Break Periods (e.g. Lunch)</label>
+            <input type="text" id="breaksInput" class="form-control" value="4" placeholder="e.g. 4">
+            <div class="help-text">Comma-separated period numbers</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Classes</label>
+            <input type="text" id="classesInput" class="form-control" value="CSE-A, CSE-B">
+            <div class="help-text">e.g. CSE-A, CSE-B</div>
+          </div>
+          <div class="form-group">
+            <label>Rooms & Labs</label>
+            <input type="text" id="roomsInput" class="form-control" value="Room 101, Room 102, Physics Lab">
+            <div class="help-text">Available rooms & laboratories</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Teachers & Availability Constraints -->
+      <div class="card" style="margin-bottom: 0;">
+        <div class="card-header">
+          <h2>2. Teachers & Availability</h2>
+          <button class="btn btn-secondary btn-sm" onclick="addTeacherRow()">+ Add Teacher</button>
+        </div>
+        <div class="help-text" style="margin-bottom: 12px;">
+          Specify teacher name and unavailable slots in <code>Day:Period</code> format (e.g. <code>Monday:1</code>).
+        </div>
+        <div class="teacher-table-header">
+          <span>Teacher Name</span>
+          <span>Unavailable Slots (e.g. Monday:1, Friday:4)</span>
+          <span>Action</span>
+        </div>
+        <div id="teachersList" class="dynamic-list"></div>
+      </div>
+    </div>
+
+    <!-- ROW 2: Card 3 (Subjects & Requirements) Full-Width & Spacious -->
+    <div class="card" id="subjectsCard">
+      <div class="card-header">
+        <h2>3. Subjects & Requirements</h2>
+        <button class="btn btn-secondary btn-sm" onclick="addSubjectRow()">+ Add Subject</button>
+      </div>
+      <div class="help-text" style="margin-bottom: 14px;">
+        Define each subject, class, assigned teacher, weekly frequency, duration (consecutive periods e.g. Labs = 2, Workshop = 3), room, and optional fixed slot (e.g. <code>Friday:5</code>).
+      </div>
+      
+      <div class="subject-table-container">
+        <!-- Clear, spacious column headers so everything is readable -->
+        <div class="subject-table-header">
+          <span>Subject Name</span>
+          <span>Class</span>
+          <span>Assigned Teacher</span>
+          <span>Freq / Wk</span>
+          <span>Duration (Periods)</span>
+          <span>Room / Lab (Optional)</span>
+          <span>Fixed Slot (Optional)</span>
+          <span>Action</span>
+        </div>
+
+        <div id="subjectsList" class="dynamic-list" style="max-height: 420px;"></div>
+      </div>
+
+      <div style="margin-top: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid var(--border); padding-top: 16px;">
+        <div class="preset-container">
+          <span class="preset-label">Reset To:</span>
+          <button class="btn-preset" onclick="loadSamplePreset(1)">⚡ 1. Default</button>
+          <button class="btn-preset" onclick="loadSamplePreset(2)">🏛️ 2. NITW (Fixed, No Minor)</button>
+          <button class="btn-preset" onclick="loadSamplePreset(3)">🚀 3. NITW (Auto Freq=3)</button>
+        </div>
+        <button class="btn btn-primary" onclick="generateTimetable()">
+          ✨ Generate Timetable
+        </button>
+      </div>
+    </div>
+
+    <!-- ROW 3: Generated Timetable Full-Width & Scrollable -->
+    <div class="card" id="timetableCard">
+      <div class="card-header">
+        <h2>Generated Timetable</h2>
+        <div id="downloadActionGroup" style="display: none; gap: 10px;">
+          <button class="btn btn-success btn-sm" onclick="downloadCSV()">
+            📥 Download CSV
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="window.print()">
+            🖨️ Print / PDF
+          </button>
+        </div>
+      </div>
+
+      <div id="outputArea">
+        <div class="empty-state">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+          </svg>
+          <h3>No timetable generated yet</h3>
+          <p>Configure constraints above or click <b>"Load Sample Example"</b>, then click <b>"Generate Timetable"</b>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State
+    let currentTimetableData = null;
+
+    // 3 Sample Presets:
+    // 1. Existing Academic Multi-Class Demo (CSE-A & CSE-B)
+    // 2. NIT Warangal Schedule (Exact Fixed Slots, Without Minor)
+    // 3. NIT Warangal Schedule (Compact: 1 row per subject with Freq/Wk=3 for Auto-Scheduling)
+    const samplePresets = {
+      1: {
+        title: "Preset 1: Standard Academic Demo (CSE-A & CSE-B)",
+        days: "Monday, Tuesday, Wednesday, Thursday, Friday",
+        periods_per_day: 6,
+        breaks: "4",
+        classes: "CSE-A, CSE-B",
+        rooms: "Room 101, Room 102, Physics Lab",
+        teachers: [
+          { name: "Teacher A", unavail: "Monday:1" },
+          { name: "Teacher B", unavail: "" },
+          { name: "Teacher C", unavail: "" },
+          { name: "Sports Coach", unavail: "" }
+        ],
+        subjects: [
+          { name: "Maths", class: "CSE-A", teacher: "Teacher A", freq: 4, dur: 1, room: "Room 101", fixed: "" },
+          { name: "Physics", class: "CSE-A", teacher: "Teacher B", freq: 3, dur: 1, room: "Room 101", fixed: "" },
+          { name: "Physics Lab", class: "CSE-A", teacher: "Teacher B", freq: 1, dur: 2, room: "Physics Lab", fixed: "" },
+          { name: "Sports", class: "CSE-A", teacher: "Sports Coach", freq: 1, dur: 1, room: "Room 101", fixed: "Friday:5" },
+          { name: "Maths", class: "CSE-B", teacher: "Teacher A", freq: 4, dur: 1, room: "Room 102", fixed: "" },
+          { name: "Physics", class: "CSE-B", teacher: "Teacher B", freq: 3, dur: 1, room: "Room 102", fixed: "" },
+          { name: "Workshop", class: "CSE-B", teacher: "Teacher C", freq: 1, dur: 3, room: "Room 102", fixed: "" }
+        ]
+      },
+      2: {
+        title: "Preset 2: NIT Warangal (Exact Fixed Slots, Without Minor)",
+        days: "Monday, Tuesday, Wednesday, Thursday, Friday",
+        periods_per_day: 9,
+        breaks: "",
+        classes: "III B.Tech (Sec-A)",
+        rooms: "Room A313, Machines Lab, Control Systems Lab, Microprocessors Lab",
+        teachers: [
+          { name: "Prof. S. Porpandiselvi", unavail: "" },
+          { name: "Prof. D V S S. Siva Sarma", unavail: "" },
+          { name: "Prof. Altaf Q H Badar", unavail: "" },
+          { name: "Prof. Sarin Raju", unavail: "" },
+          { name: "Prof. S. Srinivasa Rao", unavail: "" },
+          { name: "Prof. A. Kirubakaran", unavail: "" },
+          { name: "Prof. P. Srinivasan", unavail: "" },
+          { name: "Prof. N. Vishwanathan", unavail: "" },
+          { name: "Prof. G. Siva Kumar", unavail: "" },
+          { name: "Prof. A.V. Giridhar", unavail: "" },
+          { name: "Prof. Palash Mishra", unavail: "" },
+          { name: "Faculty Advisor", unavail: "" }
+        ],
+        subjects: [
+          // Monday: Parallel Labs for A1 (Machines) and A2 (Control) running simultaneously!
+          { name: "EE1321(E) Energy (Slot G)", class: "III B.Tech (Sec-A)", teacher: "Prof. S. Srinivasa Rao", freq: 1, dur: 1, room: "Room A313", fixed: "Monday:1" },
+          { name: "EE1307 Machines Lab (A1)", class: "III B.Tech (Sec-A)", teacher: "Prof. A. Kirubakaran", freq: 1, dur: 2, room: "Machines Lab", fixed: "Monday:2" },
+          { name: "EE1309 Control Lab (A2)", class: "III B.Tech (Sec-A)", teacher: "Prof. G. Siva Kumar", freq: 1, dur: 2, room: "Control Systems Lab", fixed: "Monday:2" },
+          { name: "EE1305 PSOC (Slot F)", class: "III B.Tech (Sec-A)", teacher: "Prof. Altaf Q H Badar", freq: 1, dur: 1, room: "Room A313", fixed: "Monday:6" },
+          { name: "Remedial Studies (Slot RS)", class: "III B.Tech (Sec-A)", teacher: "Faculty Advisor", freq: 1, dur: 1, room: "Room A313", fixed: "Monday:9" },
+
+          // Tuesday
+          { name: "EE1321(E) Energy (Slot G)", class: "III B.Tech (Sec-A)", teacher: "Prof. S. Srinivasa Rao", freq: 1, dur: 1, room: "Room A313", fixed: "Tuesday:1" },
+          { name: "EE1309 Control Lab (A1)", class: "III B.Tech (Sec-A)", teacher: "Prof. N. Vishwanathan", freq: 1, dur: 2, room: "Control Systems Lab", fixed: "Tuesday:2" },
+          { name: "MS1369 Management (Slot D)", class: "III B.Tech (Sec-A)", teacher: "Prof. Sarin Raju", freq: 1, dur: 1, room: "Room A313", fixed: "Tuesday:6" },
+          { name: "EE1301 Power Electronics (Slot A)", class: "III B.Tech (Sec-A)", teacher: "Prof. S. Porpandiselvi", freq: 1, dur: 1, room: "Room A313", fixed: "Tuesday:7" },
+
+          // Wednesday (Slot M / Minor at Period 1 excluded)
+          { name: "EE1321(E) Energy (Slot G)", class: "III B.Tech (Sec-A)", teacher: "Prof. S. Srinivasa Rao", freq: 1, dur: 1, room: "Room A313", fixed: "Wednesday:2" },
+          { name: "EE1303 Microprocessors (Slot E)", class: "III B.Tech (Sec-A)", teacher: "Prof. D V S S. Siva Sarma", freq: 1, dur: 1, room: "Room A313", fixed: "Wednesday:3" },
+          { name: "EE1301 Power Electronics (Slot A)", class: "III B.Tech (Sec-A)", teacher: "Prof. S. Porpandiselvi", freq: 1, dur: 1, room: "Room A313", fixed: "Wednesday:4" },
+          { name: "EE1303 MP Lab (A1)", class: "III B.Tech (Sec-A)", teacher: "Prof. A.V. Giridhar", freq: 1, dur: 2, room: "Microprocessors Lab", fixed: "Wednesday:7" },
+
+          // Thursday (Slot M / Minor at Period 1 excluded)
+          { name: "MS1369 Management (Slot D)", class: "III B.Tech (Sec-A)", teacher: "Prof. Sarin Raju", freq: 1, dur: 1, room: "Room A313", fixed: "Thursday:2" },
+          { name: "EE1305 PSOC (Slot F)", class: "III B.Tech (Sec-A)", teacher: "Prof. Altaf Q H Badar", freq: 1, dur: 1, room: "Room A313", fixed: "Thursday:3" },
+          { name: "EE1303 Microprocessors (Slot E)", class: "III B.Tech (Sec-A)", teacher: "Prof. D V S S. Siva Sarma", freq: 1, dur: 1, room: "Room A313", fixed: "Thursday:4" },
+          { name: "EE1301 Power Electronics (Slot A)", class: "III B.Tech (Sec-A)", teacher: "Prof. S. Porpandiselvi", freq: 1, dur: 1, room: "Room A313", fixed: "Thursday:5" },
+          { name: "EE1307 Machines Lab (A2)", class: "III B.Tech (Sec-A)", teacher: "Prof. P. Srinivasan", freq: 1, dur: 2, room: "Machines Lab", fixed: "Thursday:7" },
+
+          // Friday (Slot M / Minor at Period 1 excluded)
+          { name: "MS1369 Management (Slot D)", class: "III B.Tech (Sec-A)", teacher: "Prof. Sarin Raju", freq: 1, dur: 1, room: "Room A313", fixed: "Friday:3" },
+          { name: "EE1305 PSOC (Slot F)", class: "III B.Tech (Sec-A)", teacher: "Prof. Altaf Q H Badar", freq: 1, dur: 1, room: "Room A313", fixed: "Friday:4" },
+          { name: "EE1303 Microprocessors (Slot E)", class: "III B.Tech (Sec-A)", teacher: "Prof. D V S S. Siva Sarma", freq: 1, dur: 1, room: "Room A313", fixed: "Friday:5" },
+          { name: "EE1303 MP Lab (A2)", class: "III B.Tech (Sec-A)", teacher: "Prof. A.V. Giridhar", freq: 1, dur: 2, room: "Microprocessors Lab", fixed: "Friday:7" },
+          { name: "EE1381 Fractal Course (Slot X)", class: "III B.Tech (Sec-A)", teacher: "Prof. Palash Mishra", freq: 1, dur: 1, room: "Room A313", fixed: "Friday:9" }
+        ]
+      },
+      3: {
+        title: "Preset 3: NIT Warangal (Auto CSP Scheduler with Freq/Wk=3)",
+        days: "Monday, Tuesday, Wednesday, Thursday, Friday",
+        periods_per_day: 9,
+        breaks: "",
+        classes: "III B.Tech (Sec-A)",
+        rooms: "Room A313, Machines Lab, Control Systems Lab, Microprocessors Lab",
+        teachers: [
+          { name: "Prof. S. Porpandiselvi", unavail: "" },
+          { name: "Prof. D V S S. Siva Sarma", unavail: "" },
+          { name: "Prof. Altaf Q H Badar", unavail: "" },
+          { name: "Prof. Sarin Raju", unavail: "" },
+          { name: "Prof. S. Srinivasa Rao", unavail: "" },
+          { name: "Prof. A. Kirubakaran", unavail: "" },
+          { name: "Prof. P. Srinivasan", unavail: "" },
+          { name: "Prof. N. Vishwanathan", unavail: "" },
+          { name: "Prof. G. Siva Kumar", unavail: "" },
+          { name: "Prof. A.V. Giridhar", unavail: "" },
+          { name: "Prof. Palash Mishra", unavail: "" },
+          { name: "Faculty Advisor", unavail: "" }
+        ],
+        subjects: [
+          // 5 Core Theory Courses - entered ONCE each with Freq/Wk = 3
+          { name: "EE1301 Power Electronics (Slot A)", class: "III B.Tech (Sec-A)", teacher: "Prof. S. Porpandiselvi", freq: 3, dur: 1, room: "Room A313", fixed: "" },
+          { name: "EE1303 Microprocessors (Slot E)", class: "III B.Tech (Sec-A)", teacher: "Prof. D V S S. Siva Sarma", freq: 3, dur: 1, room: "Room A313", fixed: "" },
+          { name: "EE1305 PSOC (Slot F)", class: "III B.Tech (Sec-A)", teacher: "Prof. Altaf Q H Badar", freq: 3, dur: 1, room: "Room A313", fixed: "" },
+          { name: "MS1369 Management (Slot D)", class: "III B.Tech (Sec-A)", teacher: "Prof. Sarin Raju", freq: 3, dur: 1, room: "Room A313", fixed: "" },
+          { name: "EE1321(E) Energy (Slot G)", class: "III B.Tech (Sec-A)", teacher: "Prof. S. Srinivasa Rao", freq: 3, dur: 1, room: "Room A313", fixed: "" },
+
+          // Sub-Batch Labs (A1 & A2) - can be auto-scheduled simultaneously without conflict
+          { name: "EE1307 Machines Lab (A1)", class: "III B.Tech (Sec-A)", teacher: "Prof. A. Kirubakaran", freq: 1, dur: 2, room: "Machines Lab", fixed: "" },
+          { name: "EE1309 Control Lab (A2)", class: "III B.Tech (Sec-A)", teacher: "Prof. G. Siva Kumar", freq: 1, dur: 2, room: "Control Systems Lab", fixed: "" },
+          { name: "EE1309 Control Lab (A1)", class: "III B.Tech (Sec-A)", teacher: "Prof. N. Vishwanathan", freq: 1, dur: 2, room: "Control Systems Lab", fixed: "" },
+          { name: "EE1307 Machines Lab (A2)", class: "III B.Tech (Sec-A)", teacher: "Prof. P. Srinivasan", freq: 1, dur: 2, room: "Machines Lab", fixed: "" },
+          { name: "EE1303 MP Lab (A1)", class: "III B.Tech (Sec-A)", teacher: "Prof. A.V. Giridhar", freq: 1, dur: 2, room: "Microprocessors Lab", fixed: "" },
+          { name: "EE1303 MP Lab (A2)", class: "III B.Tech (Sec-A)", teacher: "Prof. A.V. Giridhar", freq: 1, dur: 2, room: "Microprocessors Lab", fixed: "" },
+
+          // Single-Hour Special Courses
+          { name: "EE1381 Fractal Course (Slot X)", class: "III B.Tech (Sec-A)", teacher: "Prof. Palash Mishra", freq: 1, dur: 1, room: "Room A313", fixed: "" },
+          { name: "Remedial Studies (Slot RS)", class: "III B.Tech (Sec-A)", teacher: "Faculty Advisor", freq: 1, dur: 1, room: "Room A313", fixed: "" }
+        ]
+      }
+    };
+
+    function loadSamplePreset(presetNum = 1) {
+      const config = samplePresets[presetNum] || samplePresets[1];
+
+      document.getElementById('daysInput').value = config.days;
+      document.getElementById('periodsInput').value = config.periods_per_day;
+      document.getElementById('breaksInput').value = config.breaks;
+      document.getElementById('classesInput').value = config.classes;
+      document.getElementById('roomsInput').value = config.rooms;
+
+      // Teachers
+      const teachersContainer = document.getElementById('teachersList');
+      teachersContainer.innerHTML = '';
+      config.teachers.forEach(t => addTeacherRow(t.name, t.unavail));
+
+      // Subjects
+      const subjectsContainer = document.getElementById('subjectsList');
+      subjectsContainer.innerHTML = '';
+      config.subjects.forEach(s => addSubjectRow(s.name, s.class, s.teacher, s.freq, s.dur, s.room, s.fixed));
+
+      // Highlight active button in both header and footer
+      document.querySelectorAll('.btn-preset').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.id === `btnPreset${presetNum}`) {
+          btn.classList.add('active');
+        }
+      });
+
+      showNotification('success', `${config.title} loaded! Click "Generate Timetable" to solve.`);
+    }
+
+    // Maintain backward compatibility
+    function loadSampleData() {
+      loadSamplePreset(1);
+    }
+
+    function addTeacherRow(name = '', unavail = '') {
+      const container = document.getElementById('teachersList');
+      const div = document.createElement('div');
+      div.className = 'teacher-item-row';
+      div.innerHTML = `
+        <input type="text" class="form-control teacher-name" placeholder="Teacher Name" value="${name}">
+        <input type="text" class="form-control teacher-unavail" placeholder="e.g. Monday:1, Wednesday:3" value="${unavail}">
+        <button class="btn btn-danger-sm" title="Remove Teacher" onclick="this.parentElement.remove()">✕</button>
+      `;
+      container.appendChild(div);
+    }
+
+    function addSubjectRow(name = '', cls = '', teacher = '', freq = 3, dur = 1, room = '', fixed = '') {
+      const container = document.getElementById('subjectsList');
+      const div = document.createElement('div');
+      div.className = 'subject-item-row';
+      div.innerHTML = `
+        <input type="text" class="form-control sub-name" placeholder="e.g. Physics" value="${name}">
+        <input type="text" class="form-control sub-class" placeholder="e.g. CSE-A" value="${cls}">
+        <input type="text" class="form-control sub-teacher" placeholder="e.g. Teacher A" value="${teacher}">
+        <input type="number" class="form-control sub-freq" placeholder="Freq" value="${freq}" min="1" max="10">
+        <input type="number" class="form-control sub-dur" placeholder="Dur" value="${dur}" min="1" max="6">
+        <input type="text" class="form-control sub-room" placeholder="e.g. Lab 1 / Any" value="${room}">
+        <input type="text" class="form-control sub-fixed" placeholder="e.g. Friday:5" value="${fixed}">
+        <button class="btn btn-danger-sm" title="Remove Subject" onclick="this.parentElement.remove()">✕</button>
+      `;
+      container.appendChild(div);
+    }
+
+    function collectPayload() {
+      const days = document.getElementById('daysInput').value.split(',').map(s => s.trim()).filter(Boolean);
+      const periods = parseInt(document.getElementById('periodsInput').value, 10) || 6;
+      const breaks = document.getElementById('breaksInput').value.split(',').map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n));
+      const classes = document.getElementById('classesInput').value.split(',').map(s => s.trim()).filter(Boolean);
+      const rooms = document.getElementById('roomsInput').value.split(',').map(s => s.trim()).filter(Boolean);
+
+      // Teachers
+      const teachers = {};
+      document.querySelectorAll('#teachersList .teacher-item-row').forEach(row => {
+        const name = row.querySelector('.teacher-name').value.trim();
+        const unavailStr = row.querySelector('.teacher-unavail').value.trim();
+        if (name) {
+          teachers[name] = unavailStr ? unavailStr.split(',').map(s => s.trim()).filter(Boolean) : [];
+        }
+      });
+
+      // Subjects
+      const subjects = [];
+      document.querySelectorAll('#subjectsList .subject-item-row').forEach(row => {
+        const name = row.querySelector('.sub-name').value.trim();
+        const cls = row.querySelector('.sub-class').value.trim();
+        const teacher = row.querySelector('.sub-teacher').value.trim();
+        const freq = parseInt(row.querySelector('.sub-freq').value, 10) || 1;
+        const dur = parseInt(row.querySelector('.sub-dur').value, 10) || 1;
+        const room = row.querySelector('.sub-room').value.trim();
+        const fixed = row.querySelector('.sub-fixed').value.trim();
+
+        if (name && cls && teacher) {
+          subjects.push({
+            name,
+            class: cls,
+            teacher,
+            frequency: freq,
+            duration: dur,
+            room: room || 'any',
+            fixed: fixed || null
+          });
+        }
+      });
+
+      return {
+        days,
+        periods_per_day: periods,
+        breaks,
+        classes,
+        rooms,
+        teachers,
+        subjects
+      };
+    }
+
+    async function generateTimetable() {
+      const payload = collectPayload();
+      
+      if (!payload.classes.length) {
+        showNotification('error', 'Please specify at least one Class.');
+        return;
+      }
+      if (!payload.subjects.length) {
+        showNotification('error', 'Please specify at least one Subject.');
+        return;
+      }
+
+      showNotification('success', 'Solving constraints... Please wait.');
+
+      try {
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+          showNotification('error', data.error || 'Constraints cannot be satisfied.');
+          document.getElementById('downloadActionGroup').style.display = 'none';
+          document.getElementById('outputArea').innerHTML = `
+            <div class="empty-state" style="color: #b91c1c;">
+              <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ef4444">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
+              <h3>Constraints Unsatisfiable</h3>
+              <p style="max-width: 500px; margin: 8px auto;">${data.error}</p>
+            </div>
+          `;
+          document.getElementById('timetableCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+
+        currentTimetableData = data;
+        showNotification('success', 'Timetable generated successfully! All constraints satisfied.');
+        document.getElementById('downloadActionGroup').style.display = 'flex';
+        renderTimetableTabs(data);
+
+        // Smoothly scroll down to the generated timetable
+        document.getElementById('timetableCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (err) {
+        showNotification('error', 'Network error or server unavailable: ' + err.message);
+      }
+    }
+
+    function renderTimetableTabs(data) {
+      const outputArea = document.getElementById('outputArea');
+      const classNames = Object.keys(data.class_timetables);
+      const teacherNames = Object.keys(data.teacher_timetables);
+
+      let html = `<div class="tabs">`;
+      classNames.forEach((cls, idx) => {
+        html += `<button class="tab-btn ${idx === 0 ? 'active' : ''}" onclick="switchTab(this, 'class-${cls}')">Class: ${cls}</button>`;
+      });
+      teacherNames.forEach((tch) => {
+        html += `<button class="tab-btn" onclick="switchTab(this, 'teacher-${tch}')">Teacher: ${tch}</button>`;
+      });
+      html += `</div>`;
+
+      // Tab contents
+      classNames.forEach((cls, idx) => {
+        html += `<div id="tab-class-${cls}" class="tab-content" style="${idx === 0 ? '' : 'display: none;'}">
+          ${renderTableGrid(data.days, data.periods, data.breaks, data.class_timetables[cls], 'class')}
+        </div>`;
+      });
+
+      teacherNames.forEach((tch) => {
+        html += `<div id="tab-teacher-${tch}" class="tab-content" style="display: none;">
+          ${renderTableGrid(data.days, data.periods, data.breaks, data.teacher_timetables[tch], 'teacher')}
+        </div>`;
+      });
+
+      outputArea.innerHTML = html;
+    }
+
+    function switchTab(btn, tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.style.display = 'block';
+    }
+
+    function renderTableGrid(days, periods, breaks, scheduleMap, viewType) {
+      const breakSet = new Set(breaks);
+      let html = `<div class="table-wrapper"><table class="timetable">`;
+      
+      // Table Header
+      html += `<thead><tr><th class="day-col">Day / Period</th>`;
+      periods.forEach(p => {
+        const isBreak = breakSet.has(p);
+        html += `<th>Period ${p}${isBreak ? ' (Break)' : ''}</th>`;
+      });
+      html += `</tr></thead><tbody>`;
+
+      // Rows
+      days.forEach(d => {
+        html += `<tr><td class="day-col">${d}</td>`;
+        periods.forEach(p => {
+          if (breakSet.has(p)) {
+            html += `<td class="break-cell">BREAK</td>`;
+            return;
+          }
+
+          const slot = scheduleMap[d] ? scheduleMap[d][p] : null;
+          if (!slot) {
+            html += `<td class="free-cell">— Free —</td>`;
+          } else if (slot.is_parallel && slot.parallel_sessions) {
+            html += `
+              <td>
+                <div class="subject-card" style="background: #f0fdf4; border-color: #86efac; padding: 7px 8px; text-align: left;">
+                  <div style="font-size: 0.65rem; font-weight: 800; color: #15803d; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px;">
+                    ⚡ Parallel Sub-Batches (A1 & A2)
+                  </div>
+                  ${slot.parallel_sessions.map((ps, idx) => `
+                    <div style="${idx > 0 ? 'border-top: 1px dashed #bbf7d0; padding-top: 5px; margin-top: 5px;' : ''}">
+                      <div class="subject-name" style="font-size: 0.825rem; color: #14532d; font-weight: 700;">${ps.name}</div>
+                      <div class="subject-meta" style="color: #166534; font-size: 0.725rem; margin-top: 2px;">${ps.teacher} • ${ps.room}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </td>
+            `;
+          } else {
+            const metaInfo = viewType === 'class' 
+              ? `${slot.teacher} • ${slot.room || 'Room'}`
+              : `Class: ${slot.class} • ${slot.room || 'Room'}`;
+            html += `
+              <td>
+                <div class="subject-card">
+                  <div class="subject-name">${slot.name}</div>
+                  <div class="subject-meta">${metaInfo}</div>
+                </div>
+              </td>
+            `;
+          }
+        });
+        html += `</tr>`;
+      });
+
+      html += `</tbody></table></div>`;
+      return html;
+    }
+
+    async function downloadCSV() {
+      const payload = collectPayload();
+      try {
+        const response = await fetch('/api/download', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) {
+          const err = await response.json();
+          alert('Download error: ' + (err.error || 'Failed'));
+          return;
+        }
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'timetable.csv';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } catch (e) {
+        alert('Download error: ' + e.message);
+      }
+    }
+
+    function showNotification(type, msg) {
+      const el = document.getElementById('notification');
+      el.className = `notification ${type}`;
+      el.textContent = msg;
+    }
+
+    // Auto initialize with sample data on first load
+    window.onload = function() {
+      loadSampleData();
+    };
+  </script>
+</body>
+</html>

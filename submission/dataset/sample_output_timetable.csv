@@ -1,0 +1,15 @@
+=== TIMETABLE FOR CLASS: CSE-A ===
+Day,Period 1,Period 2,Period 3,Period 4 (BREAK),Period 5,Period 6
+Monday,Free,Physics (Teacher B, Room 101),Maths (Teacher A, Room 101),BREAK,Physics Lab (Teacher B, Physics Lab),Physics Lab (Teacher B, Physics Lab)
+Tuesday,Maths (Teacher A, Room 101),Physics (Teacher B, Room 101),Free,BREAK,Free,Free
+Wednesday,Maths (Teacher A, Room 101),Physics (Teacher B, Room 101),Free,BREAK,Free,Free
+Thursday,Maths (Teacher A, Room 101),Free,Free,BREAK,Free,Free
+Friday,Free,Free,Free,BREAK,Sports (Sports Coach, Room 101),Free
+
+=== TIMETABLE FOR CLASS: CSE-B ===
+Day,Period 1,Period 2,Period 3,Period 4 (BREAK),Period 5,Period 6
+Monday,Workshop (Teacher C, Room 102),Workshop (Teacher C, Room 102),Workshop (Teacher C, Room 102),BREAK,Free,Free
+Tuesday,Physics (Teacher B, Room 102),Maths (Teacher A, Room 102),Free,BREAK,Free,Free
+Wednesday,Physics (Teacher B, Room 102),Maths (Teacher A, Room 102),Free,BREAK,Free,Free
+Thursday,Physics (Teacher B, Room 102),Maths (Teacher A, Room 102),Free,BREAK,Free,Free
+Friday,Maths (Teacher A, Room 102),Free,Free,BREAK,Free,Free

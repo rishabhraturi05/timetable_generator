@@ -1,0 +1,24 @@
+{
+  "name": "Academic Multi-Class Demo (CSE-A & CSE-B)",
+  "description": "Standard benchmark test case with 2 classes, shared teachers, lab sessions, and fixed sports periods.",
+  "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+  "periods_per_day": 6,
+  "breaks": [4],
+  "classes": ["CSE-A", "CSE-B"],
+  "rooms": ["Room 101", "Room 102", "Physics Lab"],
+  "teachers": {
+    "Teacher A": ["Monday:1"],
+    "Teacher B": [],
+    "Teacher C": [],
+    "Sports Coach": []
+  },
+  "subjects": [
+    { "name": "Maths", "class": "CSE-A", "teacher": "Teacher A", "frequency": 4, "duration": 1, "room": "Room 101", "fixed": null },
+    { "name": "Physics", "class": "CSE-A", "teacher": "Teacher B", "frequency": 3, "duration": 1, "room": "Room 101", "fixed": null },
+    { "name": "Physics Lab", "class": "CSE-A", "teacher": "Teacher B", "frequency": 1, "duration": 2, "room": "Physics Lab", "fixed": null },
+    { "name": "Sports", "class": "CSE-A", "teacher": "Sports Coach", "frequency": 1, "duration": 1, "room": "Room 101", "fixed": "Friday:5" },
+    { "name": "Maths", "class": "CSE-B", "teacher": "Teacher A", "frequency": 4, "duration": 1, "room": "Room 102", "fixed": null },
+    { "name": "Physics", "class": "CSE-B", "teacher": "Teacher B", "frequency": 3, "duration": 1, "room": "Room 102", "fixed": null },
+    { "name": "Workshop", "class": "CSE-B", "teacher": "Teacher C", "frequency": 1, "duration": 3, "room": "Room 102", "fixed": null }
+  ]
+}

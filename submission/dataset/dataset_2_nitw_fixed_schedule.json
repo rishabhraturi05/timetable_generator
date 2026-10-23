@@ -1,0 +1,52 @@
+{
+  "name": "NIT Warangal (Exact Fixed Schedule with Parallel Labs)",
+  "description": "Real-world engineering timetable from National Institute of Technology Warangal (III B.Tech EEE Sec-A) demonstrating parallel laboratory execution (A1 & A2 simultaneous scheduling in different labs) and fixed slot placement.",
+  "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+  "periods_per_day": 9,
+  "breaks": [],
+  "classes": ["III B.Tech (Sec-A)"],
+  "rooms": ["Room A313", "Machines Lab", "Control Systems Lab", "Microprocessors Lab"],
+  "teachers": {
+    "Prof. S. Porpandiselvi": [],
+    "Prof. D V S S. Siva Sarma": [],
+    "Prof. Altaf Q H Badar": [],
+    "Prof. Sarin Raju": [],
+    "Prof. S. Srinivasa Rao": [],
+    "Prof. A. Kirubakaran": [],
+    "Prof. P. Srinivasan": [],
+    "Prof. N. Vishwanathan": [],
+    "Prof. G. Siva Kumar": [],
+    "Prof. A.V. Giridhar": [],
+    "Prof. Palash Mishra": [],
+    "Faculty Advisor": []
+  },
+  "subjects": [
+    { "name": "EE1321(E) Energy (Slot G)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. S. Srinivasa Rao", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Monday:1" },
+    { "name": "EE1307 Machines Lab (A1)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. A. Kirubakaran", "frequency": 1, "duration": 2, "room": "Machines Lab", "fixed": "Monday:2" },
+    { "name": "EE1309 Control Lab (A2)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. G. Siva Kumar", "frequency": 1, "duration": 2, "room": "Control Systems Lab", "fixed": "Monday:2" },
+    { "name": "EE1305 PSOC (Slot F)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. Altaf Q H Badar", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Monday:6" },
+    { "name": "Remedial Studies (Slot RS)", "class": "III B.Tech (Sec-A)", "teacher": "Faculty Advisor", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Monday:9" },
+
+    { "name": "EE1321(E) Energy (Slot G)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. S. Srinivasa Rao", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Tuesday:1" },
+    { "name": "EE1309 Control Lab (A1)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. N. Vishwanathan", "frequency": 1, "duration": 2, "room": "Control Systems Lab", "fixed": "Tuesday:2" },
+    { "name": "MS1369 Management (Slot D)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. Sarin Raju", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Tuesday:6" },
+    { "name": "EE1301 Power Electronics (Slot A)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. S. Porpandiselvi", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Tuesday:7" },
+
+    { "name": "EE1321(E) Energy (Slot G)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. S. Srinivasa Rao", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Wednesday:2" },
+    { "name": "EE1303 Microprocessors (Slot E)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. D V S S. Siva Sarma", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Wednesday:3" },
+    { "name": "EE1301 Power Electronics (Slot A)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. S. Porpandiselvi", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Wednesday:4" },
+    { "name": "EE1303 MP Lab (A1)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. A.V. Giridhar", "frequency": 1, "duration": 2, "room": "Microprocessors Lab", "fixed": "Wednesday:7" },
+
+    { "name": "MS1369 Management (Slot D)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. Sarin Raju", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Thursday:2" },
+    { "name": "EE1305 PSOC (Slot F)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. Altaf Q H Badar", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Thursday:3" },
+    { "name": "EE1303 Microprocessors (Slot E)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. D V S S. Siva Sarma", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Thursday:4" },
+    { "name": "EE1301 Power Electronics (Slot A)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. S. Porpandiselvi", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Thursday:5" },
+    { "name": "EE1307 Machines Lab (A2)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. P. Srinivasan", "frequency": 1, "duration": 2, "room": "Machines Lab", "fixed": "Thursday:7" },
+
+    { "name": "MS1369 Management (Slot D)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. Sarin Raju", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Friday:3" },
+    { "name": "EE1305 PSOC (Slot F)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. Altaf Q H Badar", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Friday:4" },
+    { "name": "EE1303 Microprocessors (Slot E)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. D V S S. Siva Sarma", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Friday:5" },
+    { "name": "EE1303 MP Lab (A2)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. A.V. Giridhar", "frequency": 1, "duration": 2, "room": "Microprocessors Lab", "fixed": "Friday:7" },
+    { "name": "EE1381 Fractal Course (Slot X)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. Palash Mishra", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": "Friday:9" }
+  ]
+}

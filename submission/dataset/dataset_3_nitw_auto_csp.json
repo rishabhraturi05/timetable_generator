@@ -1,0 +1,40 @@
+{
+  "name": "NIT Warangal (Full Autonomous CSP Scheduling)",
+  "description": "Autonomous CSP solver test where core theory courses are configured with Frequency=3 (auto-scheduled across the week) and sub-batch labs (A1 & A2) are dynamically parallelized without manual fixed time slots.",
+  "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+  "periods_per_day": 9,
+  "breaks": [],
+  "classes": ["III B.Tech (Sec-A)"],
+  "rooms": ["Room A313", "Machines Lab", "Control Systems Lab", "Microprocessors Lab"],
+  "teachers": {
+    "Prof. S. Porpandiselvi": [],
+    "Prof. D V S S. Siva Sarma": [],
+    "Prof. Altaf Q H Badar": [],
+    "Prof. Sarin Raju": [],
+    "Prof. S. Srinivasa Rao": [],
+    "Prof. A. Kirubakaran": [],
+    "Prof. P. Srinivasan": [],
+    "Prof. N. Vishwanathan": [],
+    "Prof. G. Siva Kumar": [],
+    "Prof. A.V. Giridhar": [],
+    "Prof. Palash Mishra": [],
+    "Faculty Advisor": []
+  },
+  "subjects": [
+    { "name": "EE1301 Power Electronics (Slot A)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. S. Porpandiselvi", "frequency": 3, "duration": 1, "room": "Room A313", "fixed": null },
+    { "name": "EE1303 Microprocessors (Slot E)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. D V S S. Siva Sarma", "frequency": 3, "duration": 1, "room": "Room A313", "fixed": null },
+    { "name": "EE1305 PSOC (Slot F)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. Altaf Q H Badar", "frequency": 3, "duration": 1, "room": "Room A313", "fixed": null },
+    { "name": "MS1369 Management (Slot D)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. Sarin Raju", "frequency": 3, "duration": 1, "room": "Room A313", "fixed": null },
+    { "name": "EE1321(E) Energy (Slot G)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. S. Srinivasa Rao", "frequency": 3, "duration": 1, "room": "Room A313", "fixed": null },
+
+    { "name": "EE1307 Machines Lab (A1)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. A. Kirubakaran", "frequency": 1, "duration": 2, "room": "Machines Lab", "fixed": null },
+    { "name": "EE1309 Control Lab (A2)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. G. Siva Kumar", "frequency": 1, "duration": 2, "room": "Control Systems Lab", "fixed": null },
+    { "name": "EE1309 Control Lab (A1)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. N. Vishwanathan", "frequency": 1, "duration": 2, "room": "Control Systems Lab", "fixed": null },
+    { "name": "EE1307 Machines Lab (A2)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. P. Srinivasan", "frequency": 1, "duration": 2, "room": "Machines Lab", "fixed": null },
+    { "name": "EE1303 MP Lab (A1)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. A.V. Giridhar", "frequency": 1, "duration": 2, "room": "Microprocessors Lab", "fixed": null },
+    { "name": "EE1303 MP Lab (A2)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. A.V. Giridhar", "frequency": 1, "duration": 2, "room": "Microprocessors Lab", "fixed": null },
+
+    { "name": "EE1381 Fractal Course (Slot X)", "class": "III B.Tech (Sec-A)", "teacher": "Prof. Palash Mishra", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": null },
+    { "name": "Remedial Studies (Slot RS)", "class": "III B.Tech (Sec-A)", "teacher": "Faculty Advisor", "frequency": 1, "duration": 1, "room": "Room A313", "fixed": null }
+  ]
+}
